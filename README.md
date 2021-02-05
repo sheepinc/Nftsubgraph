@@ -1,1 +1,2 @@
-# nftSubgraph
+#TODO
+make rarible unclaimed graph
