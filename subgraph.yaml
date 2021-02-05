@@ -1,6 +1,6 @@
 specVersion: 0.0.2
 description: eip721 and eip1155 subgraph for ethereum mainnet
-repository: https://github.com/amxx/eip1155-subgraph
+repository: https://github.com/Frank-bl/nftSubgraph
 schema:
   file: ./schema.graphql
 dataSources:
@@ -8,7 +8,7 @@ dataSources:
     name: IERC1155
     network: mainnet
     source:
-      abi: IERC1155
+      abi: IERC1155_and_IERC721
       startBlock: 6930510
     mapping:
       kind: ethereum/events
@@ -16,11 +16,11 @@ dataSources:
       language: wasm/assemblyscript
       entities:
         - Token
+        - Contract
+        - Account
       abis:
-        - name: IERC1155
-          file: ./node_modules/@openzeppelin/contracts/build/contracts/IERC1155.json
-        - name: IERC721
-          file: ./node_modules/@openzeppelin/contracts/build/contracts/IERC721.json
+        - name: all
+          file: ./abis/all.json
       eventHandlers:
         - event: TransferBatch(indexed address,indexed address,indexed address,uint256[],uint256[])
           handler: handleTransferBatch
@@ -28,5 +28,7 @@ dataSources:
           handler: handleTransferSingle
         - event: URI(string,indexed uint256)
           handler: handleURI
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
       file: ./mapping.ts
       

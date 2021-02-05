@@ -24,7 +24,6 @@ import {
     Balance,
     Contract
 } from './generated/schema'
-import { handleTransfer } from '../eip721-subgraph/src/mapping';
 
 enum tokenType {e721,e1155}
 
@@ -57,7 +56,7 @@ export function handleURI(event:URIEvent):void{
     let registry = new Contract(event.address.toHex())
 	registry.save()
 
-	let token = fetchToken(registry, event.params.id)
+	let token = fetchToken(registry, event.params.id,tokenType.e721)
 	token.URI = event.params.value
 	token.save()
 }

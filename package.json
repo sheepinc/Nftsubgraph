@@ -1,26 +1,23 @@
 {
-  "name": "eip1155-subgraph",
+  "name": "Nftsubgraph",
   "version": "1.0.0",
-  "description": "A subgraph to list them all",
-  "author": "Hadrien Croubois (@Amxx)",
+  "description": "A subgraph to list all erc721 and erc1155 within the same api",
+  "author": "Sheepgod ",
   "license": "MIT",
-  "homepage": "https://github.com/amxx/eip1155-subgraph.git#readme",
+  "homepage": "https://github.com/sheepinc/nftSubgraph",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/amxx/eip1155-subgraph.git"
+    "url": "git+https://github.com/sheepinc/nftSubgraph.git"
   },
   "bugs": {
-    "url": "https://github.com/amxx/eip1155-subgraph.git/issues"
+    "url": "https://github.com/sheepinc/nftSubgraph.git/issues"
   },
   "scripts": {
     "build:schema": "concat -o schema.graphql src/schema.gql node_modules/@amxx/graphprotocol-utils/schema.graphql",
     "build:codegen": "graph codegen subgraph.yaml",
     "build:compile": "graph build subgraph.yaml",
     "build:*": "yarn build:schema && yarn build:codegen && yarn build:compile",
-    "deploy": "graph deploy --debug --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ amxx/eip1155-subgraph"
-  },
-  "dependencies": {
-    "@openzeppelin/contracts": "^3.4.0"
+    "deploy": "graph deploy --debug --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ sheepinc/eip1155-subgraph"
   },
   "devDependencies": {
     "@amxx/graphprotocol-utils": "0.0.6-2",
