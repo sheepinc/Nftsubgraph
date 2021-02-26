@@ -16,8 +16,10 @@
     "build:schema": "concat -o schema.graphql src/schema.gql node_modules/@amxx/graphprotocol-utils/schema.graphql",
     "build:codegen": "graph codegen subgraph.yaml",
     "build:compile": "graph build subgraph.yaml",
+    "create-local": "graph create sheepinc/Nftsubgraph --node http://127.0.0.1:8020",
     "build:*": "yarn build:schema && yarn build:codegen && yarn build:compile",
-    "deploy": "graph deploy --debug --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ sheepinc/Nftsubgraph"
+    "deploy": "graph deploy --debug --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ sheepinc/Nftsubgraph",
+    "deploy-local": "graph deploy sheepinc/Nftsubgraph --ipfs http://localhost:5001 --node http://127.0.0.1:8020"
   },
   "devDependencies": {
     "@amxx/graphprotocol-utils": "0.0.6-2",
