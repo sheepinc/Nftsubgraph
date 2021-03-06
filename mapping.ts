@@ -7,7 +7,6 @@ import {
 import {
 	constants,
 	events,
-	integers,
 	transactions,
 } from '@amxx/graphprotocol-utils'
 
@@ -165,9 +164,10 @@ function registerTransfer(
 	ev.value       = value
 
     if (from.id == constants.ADDRESS_ZERO) {
-		collection.totalSupply = collection.totalSupply.plus(BigInt.fromI32(1))
+		collection.totalSupply = collection.totalSupply.plus(value)
 		token.mintTimeStamp=event.block.timestamp	
 		if(type=="e721"){
+			token.totalSupply=BigInt.fromI32(1);
 			let tokenB = IERC721.bind(event.address) 
 			let supportsEIP165Identifier = supportsInterface721(tokenB, '01ffc9a7');
 			let supportsEIP721Identifier = supportsInterface721(tokenB, '80ac58cd');
@@ -180,19 +180,14 @@ function registerTransfer(
 					token.URI= normalize(URI.value)
 				}
 			}
-		}else{
-			token.totalSupply = BigInt.fromI32(1)
 		}
+		token.totalSupply=token.totalSupply.plus(value)
 	} else {
 		let balance = fetchBalance(token, from)
-		balance.amount = balance.amount.minus(BigInt.fromI32(1))
+		balance.amount = balance.amount.minus(value)
 		balance.save()
-		from.totalTokensOwned.plus(BigInt.fromI32(1))
-		if(type=="e721"){
-			from.totalErc721Owned.plus(BigInt.fromI32(1))
-		}else{
-			from.totalErc1155Owned.plus(BigInt.fromI32(1))
-		}
+		from.totalTokensOwned = from.totalTokensOwned.minus(value)
+		from.totalErc721Owned = from.totalErc721Owned.minus(value)
 		ev.fromBalance = balance.id
 	}
 
@@ -203,12 +198,8 @@ function registerTransfer(
 		let balance = fetchBalance(token, to)
 		balance.amount = balance.amount.plus(value)
 		balance.save()
-		to.totalTokensOwned.minus(BigInt.fromI32(1))
-		if(type=="e721"){
-			to.totalErc721Owned.minus(BigInt.fromI32(1))
-		}else{
-			to.totalErc1155Owned.minus(BigInt.fromI32(1))
-		}
+		to.totalTokensOwned = to.totalTokensOwned.plus(value)
+		to.totalErc721Owned = to.totalErc721Owned.plus(value)
 		ev.toBalance = balance.id
 	}
 	from.save()
